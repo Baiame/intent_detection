@@ -58,10 +58,10 @@ def preprocess(text: str) -> list[str]:
     5. Tokenizes the text.
     6. Removes stopwords from the tokens.
     7. Lemmatizes the tokens.
-    
+
     Parameters:
         text: The input text to preprocess.
-        
+
     Returns:
         The preprocessed text.
     """

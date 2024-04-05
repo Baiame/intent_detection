@@ -1,6 +1,7 @@
 import torch
 from typing import Any, Union
 
+
 class ClassificationDataset(torch.utils.data.Dataset):
     """
     Dataset class for classification tasks.
@@ -25,7 +26,7 @@ class ClassificationDataset(torch.utils.data.Dataset):
             Dictionary containing the input encodings and the label.
         """
         item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
-        item['label'] = self.labels[idx]
+        item["label"] = self.labels[idx]
         return item
 
     def __len__(self) -> int:

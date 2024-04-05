@@ -6,14 +6,14 @@ from evaluation import compute_metrics
 
 
 class Model:
-    def __init__(self, model: str, weights_path: str, output_dir: str='.'):
+    def __init__(self, model: str, weights_path: str, output_dir: str = "."):
         """
         Initialize the model.
 
         Parameters:
             model: Type of model to use. Allowed values are "NB", "SVC", "RF", "SGD", "SGD_GENSIM", or "Bert".
             weights_path: path to the saved weights of the model.
-        
+
         Raises:
             ValueError: Unknown model type is provided.
         """
@@ -22,17 +22,16 @@ class Model:
             self.model = load(weights_path)
         elif model in ["Bert"]:
             test_args = TrainingArguments(
-                    output_dir=output_dir,
-                    do_train = False,
-                    do_predict = True,
-                    per_device_eval_batch_size = 16,   
-                    dataloader_drop_last = False    
-                )
+                output_dir=output_dir,
+                do_train=False,
+                do_predict=True,
+                per_device_eval_batch_size=16,
+                dataloader_drop_last=False,
+            )
             model = AutoModelForSequenceClassification.from_pretrained(weights_path)
             self.model = Trainer(
-                        model = model, 
-                        args = test_args, 
-                        compute_metrics = compute_metrics)
+                model=model, args=test_args, compute_metrics=compute_metrics
+            )
         else:
             raise ValueError("Unknown model.")
 

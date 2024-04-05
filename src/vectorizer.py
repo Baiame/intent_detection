@@ -5,10 +5,11 @@ import numpy as np
 
 
 class Vectorizer:
-    """ Vectorizer class. """
+    """Vectorizer class."""
+
     def __init__(self, vectorizer, weights_path) -> None:
-        """ Instantiate the vectorizer model from the weights path.
-        
+        """Instantiate the vectorizer model from the weights path.
+
         Args:
             vectorizer: the vectorizer name.
             weights_path: path to the weights file.
@@ -42,7 +43,9 @@ class Vectorizer:
             return _vectorize(data, self.vectorizer, embedding_dim)
 
 
-def _vectorize_sentence(sentence: str, model: Word2VecKeyedVectors, embedding_dim: int) -> np.ndarray:
+def _vectorize_sentence(
+    sentence: str, model: Word2VecKeyedVectors, embedding_dim: int
+) -> np.ndarray:
     """
     Vectorizes a sentence using the provided Word2Vec model.
 
@@ -58,14 +61,15 @@ def _vectorize_sentence(sentence: str, model: Word2VecKeyedVectors, embedding_di
     for word in sentence.split():
         if word in model.vocab:
             vectorized_sentence.append(model[word])
-    if len(vectorized_sentence) == 0: #all words are not found in the model
-        return np.zeros(
-            embedding_dim
-        ) 
+    if len(vectorized_sentence) == 0:  # all words are not found in the model
+        return np.zeros(embedding_dim)
     else:
         return np.mean(vectorized_sentence, axis=0)
 
-def _vectorize(data: list[str], model: Word2VecKeyedVectors, embedding_dim: int) -> np.ndarray:
+
+def _vectorize(
+    data: list[str], model: Word2VecKeyedVectors, embedding_dim: int
+) -> np.ndarray:
     """
     Vectorizes a list of sentences using the provided Word2Vec model.
 

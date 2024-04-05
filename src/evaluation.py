@@ -19,9 +19,8 @@ def compute_metrics(pred) -> dict:
     labels = pred.label_ids
     preds = pred.predictions.argmax(-1)
     acc = accuracy_score(labels, preds)
-    return {
-        'accuracy': acc
-    }
+    return {"accuracy": acc}
+
 
 def perform_eval(preds: list[str], labels: list[str], output_dir: str):
     """
@@ -33,10 +32,11 @@ def perform_eval(preds: list[str], labels: list[str], output_dir: str):
         output_dir: Directory to save evaluation results.
     """
     report = classification_report(labels, preds)
-    with open(Path(output_dir, "report.txt"), 'w') as file:
+    with open(Path(output_dir, "report.txt"), "w") as file:
         file.write(report)
     save_confusion_matrix(preds, labels, output_dir)
     print(report)
+
 
 def save_confusion_matrix(preds: list[str], labels: list[str], output_dir: str):
     """
@@ -49,9 +49,16 @@ def save_confusion_matrix(preds: list[str], labels: list[str], output_dir: str):
     """
     available_labels = list(LABEL_DEF.keys())
     conf_matrix = confusion_matrix(preds, labels, labels=available_labels)
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap="Blues", xticklabels=available_labels, yticklabels=available_labels)
-    plt.xlabel('Predicted Labels')
-    plt.ylabel('Actual Labels')
-    plt.title('Confusion Matrix')
+    sns.heatmap(
+        conf_matrix,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=available_labels,
+        yticklabels=available_labels,
+    )
+    plt.xlabel("Predicted Labels")
+    plt.ylabel("Actual Labels")
+    plt.title("Confusion Matrix")
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     plt.savefig(Path(output_dir, "cm.png"))

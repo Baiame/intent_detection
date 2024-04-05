@@ -21,7 +21,7 @@ WEIGHT_PATHS = {
     "SVC": "models/svc.joblib",
     "RF": "models/random_forest.joblib",
     "NB": "models/multinomial_nb.joblib",
-    "Bert": "models/albert-base-v2"
+    "Bert": "models/albert-base-v2",
 }
 
 
@@ -54,7 +54,7 @@ def main():
             eval_mode = True
         else:
             dataset = INFERENCE_CSV_SCHEMA.validate(dataset)
-            
+
     else:
         dataset = pd.DataFrame({"text": [args.text]})
 
@@ -74,12 +74,15 @@ def main():
         tokenizer = AutoTokenizer.from_pretrained("albert-base-v2")
         model = Model(args.model, weights_path=WEIGHT_PATHS[args.model])
 
-        texts_encoded = tokenizer(list(dataset["text"]), padding=True, truncation=True, return_tensors="pt")
-        result = model.predict(ClassificationDataset(texts_encoded, [None]*len(dataset)))
+        texts_encoded = tokenizer(
+            list(dataset["text"]), padding=True, truncation=True, return_tensors="pt"
+        )
+        result = model.predict(
+            ClassificationDataset(texts_encoded, [None] * len(dataset))
+        )
         result = result.predictions.argmax(-1)
         invert_map = {v: k for k, v in LABEL_DEF.items()}
         result = [invert_map[res] for res in result]
-
 
     else:
         raise ValueError("Unknown model.")
@@ -93,6 +96,7 @@ def main():
         output_dataframe.to_csv(Path(args.output, "result.csv"))
     else:
         print(result)
+
 
 if __name__ == "__main__":
     main()
