@@ -43,9 +43,32 @@ def main():
         type=str,
         help="Vectorizer type. Available: ['TFIDF', 'Gensim']",
     )
+    parser.add_argument(
+        "--interactive",
+        type=bool,
+        help="Run interactive mode.",
+    )
     args = parser.parse_args()
 
     eval_mode = False
+
+    if args.interactive:
+        tokenizer = AutoTokenizer.from_pretrained("dbmdz/bert-base-french-europeana-cased")
+        model = Model("French_Bert", weights_path=WEIGHT_PATHS["French_Bert"])
+        invert_map = {v: k for k, v in LABEL_DEF.items()}
+
+        while True:
+            input_text = input("Please enter a sentence : ")
+            dataset = pd.DataFrame({"text": [input_text]})
+            texts_encoded = tokenizer(
+                list(dataset["text"]), padding=True, truncation=True, return_tensors="pt"
+            )
+            result = model.predict(
+                ClassificationDataset(texts_encoded, [None] * len(dataset))
+            )
+            raw_predictions = result.predictions.argmax(-1)
+            result = [invert_map[res] for res in raw_predictions]
+            print(result)
 
     # Load data
     if args.input:
