@@ -44,12 +44,19 @@ make install
 
 ## Models
 Available models are :
-- NB
-- SVC
-- SGD
-- RF
+- Vectorizers :
+  - [TFIDF](https://medium.com/@cmukesh8688/tf-idf-vectorizer-scikit-learn-dbc0244a911a)
+  - Gensim
+- Classification models :
+  - NB
+  - SVC
+  - SGD
+  - RF
+DNN Models :
 - Bert
 - French_Bert
+
+A
 
 ## Run
 ### Run interactive shell
