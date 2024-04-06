@@ -47,12 +47,12 @@ Available models are :
 - Vectorizers :
   - [TFIDF](https://medium.com/@cmukesh8688/tf-idf-vectorizer-scikit-learn-dbc0244a911a)
   - Gensim
-- Classification models :
+- Classification Models :
   - NB
   - SVC
   - SGD
   - RF
-DNN Models :
+- DNN Models (no vectorizer needed) :
 - Bert
 - French_Bert
 
