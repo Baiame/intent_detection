@@ -53,8 +53,8 @@ Available models are :
   - SGD
   - RF
 - DNN Models (no vectorizer needed) :
-- Bert
-- French_Bert
+  - Bert
+  - French_Bert
 
 ## Run
 ### Run interactive shell
