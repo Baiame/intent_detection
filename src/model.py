@@ -11,7 +11,7 @@ class Model:
         Initialize the model.
 
         Parameters:
-            model: Type of model to use. Allowed values are "NB", "SVC", "RF", "SGD", "SGD_GENSIM", or "Bert".
+            model: Type of model to use. Allowed values are "NB", "SVC", "RF", "SGD", "SGD_GENSIM", "Bert" or "French_Bert.
             weights_path: path to the saved weights of the model.
 
         Raises:
@@ -20,7 +20,7 @@ class Model:
         self.model_type = model
         if model in ["NB", "SVC", "RF", "SGD", "SGD_GENSIM"]:
             self.model = load(weights_path)
-        elif model in ["Bert"]:
+        elif model in ["Bert", "French_Bert"]:
             test_args = TrainingArguments(
                 output_dir=output_dir,
                 do_train=False,

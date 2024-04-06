@@ -22,6 +22,7 @@ WEIGHT_PATHS = {
     "RF": "models/random_forest.joblib",
     "NB": "models/multinomial_nb.joblib",
     "Bert": "models/albert-base-v2",
+    "French_Bert": "models/french-bert"
 }
 
 
@@ -35,7 +36,7 @@ def main():
     parser.add_argument(
         "--model",
         type=str,
-        help="Model type. Available: ['NB', 'SVC', 'RF', 'SGD', 'Bert']",
+        help="Model type. Available: ['NB', 'SVC', 'RF', 'SGD', 'SGD_GENSIM', 'Bert', 'French_Bert']",
     )
     parser.add_argument(
         "--vectorizer",
@@ -58,9 +59,6 @@ def main():
     else:
         dataset = pd.DataFrame({"text": [args.text]})
 
-    # Pre-processing
-    dataset = dataset.drop_duplicates()
-    dataset["text"] = dataset["text"].apply(preprocess)
 
     # Instantiate Model
     if args.model in ["NB", "SVC", "RF", "SGD", "SGD_GENSIM"]:
@@ -68,10 +66,11 @@ def main():
         vectorizer = Vectorizer(
             args.vectorizer, weights_path=WEIGHT_PATHS[args.vectorizer]
         )
+        dataset["text"] = dataset["text"].apply(preprocess)
         vectors = vectorizer.transform(list(dataset["text"]))
         result = model.predict(vectors)
-    elif args.model in ["Bert"]:
-        tokenizer = AutoTokenizer.from_pretrained("albert-base-v2")
+    elif args.model in ["Bert", "French_Bert"]:
+        tokenizer = AutoTokenizer.from_pretrained("albert-base-v2") if args.model == "Bert" else AutoTokenizer.from_pretrained("dbmdz/bert-base-french-europeana-cased")
         model = Model(args.model, weights_path=WEIGHT_PATHS[args.model])
 
         texts_encoded = tokenizer(
@@ -80,9 +79,9 @@ def main():
         result = model.predict(
             ClassificationDataset(texts_encoded, [None] * len(dataset))
         )
-        result = result.predictions.argmax(-1)
+        raw_predictions = result.predictions.argmax(-1)
         invert_map = {v: k for k, v in LABEL_DEF.items()}
-        result = [invert_map[res] for res in result]
+        result = [invert_map[res] for res in raw_predictions]
 
     else:
         raise ValueError("Unknown model.")
