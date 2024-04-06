@@ -56,8 +56,6 @@ DNN Models :
 - Bert
 - French_Bert
 
-A
-
 ## Run
 ### Run interactive shell
 ```
