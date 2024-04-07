@@ -74,6 +74,15 @@ python src/run.py --text "A quelle heure doit décoller le vol AF345 ?" --model 
 
 ### Evaluation
 The input CSV file must have 2 columns: `text` and `label`.
+
+For example :
+|text|label|
+|---|---|
+|Quelle est l'heure de décollage du prochain vol pour Paris ?|flight_status|
+|J'ai besoin de réserver une chambre à Lisbonne|book_hotel|
+
+To run the evaluation, you can use :
 ```
 python src/run.py --input /path/to/input.csv --output /path/to/output/dir --model SVC --vectorizer TFIDF
 ```
+After evaluation, the output directory will contain the predictons, the metrics and a confusion matrix.
