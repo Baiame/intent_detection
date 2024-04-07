@@ -8,6 +8,7 @@ from vectorizer import Vectorizer
 from model import Model
 from evaluation import perform_eval
 from pathlib import Path
+import time
 
 from dataset import ClassificationDataset
 from transformers import AutoTokenizer
@@ -59,6 +60,7 @@ def main():
 
         while True:
             input_text = input("Please enter a sentence : ")
+            start_time = time.perf_counter()
             dataset = pd.DataFrame({"text": [input_text]})
             texts_encoded = tokenizer(
                 list(dataset["text"]), padding=True, truncation=True, return_tensors="pt"
@@ -68,7 +70,10 @@ def main():
             )
             raw_predictions = result.predictions.argmax(-1)
             result = [invert_map[res] for res in raw_predictions]
+            end_time = time.perf_counter()
             print(result)
+            print("Computation time: ", end_time - start_time)
+
 
     # Load data
     if args.input:
