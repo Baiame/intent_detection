@@ -73,12 +73,3 @@ def preprocess(text: str) -> list[str]:
     tokens = remove_stopwords(tokens)
     tokens = lemmatize(tokens)
     return " ".join(tokens)
-
-
-def preprocess_light(text: str) -> str:
-    text = text.lower()
-    text = text.replace("-", " ")
-    text = unicodedata.normalize("NFD", text)
-    text = text.encode("ascii", "ignore").decode("utf-8")
-    text = re.sub(r"[^a-zA-Z\s]", "", text)
-    return text
