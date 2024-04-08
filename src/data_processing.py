@@ -28,7 +28,7 @@ def remove_stopwords(tokens: list[str]) -> list[str]:
         tokens: list of token words.
 
     Returns:
-        list of token words.
+        List of token words.
     """
     stop_words = set(stopwords.words("french"))
     return [token for token in tokens if token not in stop_words]
@@ -38,11 +38,16 @@ def lemmatize(tokens: list[str]) -> list[str]:
     """
     Lemmatize a list of tokens.
 
+    Definition: Lemmatization (or less commonly lemmatisation) in linguistics is
+        the process of grouping together the inflected forms of a word so they
+        can be analysed as a single item, identified by the word's lemma, or
+        dictionary form.
+
     Args:
         tokens: list of token words.
 
     Returns:
-        list of token words.
+        List of token words.
     """
     lemmatizer = WordNetLemmatizer()
     return [lemmatizer.lemmatize(token) for token in tokens]
@@ -50,9 +55,9 @@ def lemmatize(tokens: list[str]) -> list[str]:
 
 def preprocess(text: str) -> list[str]:
     """
-    Preprocesses the input text by performing the following steps:
+    Preprocesses the input text with the following steps :
     1. Converts the text to lowercase.
-    2. Normalizes the text using NFD (Normalization Form Decomposition).
+    2. Normalizes the text using Normalization Form Decomposition.
     3. Removes any characters that are not in the ASCII range.
     4. Removes any non-alphabetic characters except whitespaces.
     5. Tokenizes the text.

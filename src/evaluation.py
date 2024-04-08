@@ -49,7 +49,7 @@ def save_confusion_matrix(preds: list[str], labels: list[str], output_dir: str):
     """
     available_labels = list(LABEL_DEF.keys())
     conf_matrix = confusion_matrix(preds, labels, labels=available_labels)
-    _, _ = plt.subplots(figsize=(10,10))
+    _, _ = plt.subplots(figsize=(10, 10))
     sns.heatmap(
         conf_matrix,
         annot=True,

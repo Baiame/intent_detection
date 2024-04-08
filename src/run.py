@@ -23,7 +23,7 @@ WEIGHT_PATHS = {
     "RF": "models/random_forest.joblib",
     "NB": "models/multinomial_nb.joblib",
     "Bert": "models/albert-base-v2",
-    "French_Bert": "models/french-bert"
+    "French_Bert": "models/french-bert",
 }
 
 
@@ -54,7 +54,9 @@ def main():
     eval_mode = False
 
     if args.interactive:
-        tokenizer = AutoTokenizer.from_pretrained("dbmdz/bert-base-french-europeana-cased")
+        tokenizer = AutoTokenizer.from_pretrained(
+            "dbmdz/bert-base-french-europeana-cased"
+        )
         model = Model("French_Bert", weights_path=WEIGHT_PATHS["French_Bert"])
         invert_map = {v: k for k, v in LABEL_DEF.items()}
 
@@ -63,7 +65,10 @@ def main():
             start_time = time.perf_counter()
             dataset = pd.DataFrame({"text": [input_text]})
             texts_encoded = tokenizer(
-                list(dataset["text"]), padding=True, truncation=True, return_tensors="pt"
+                list(dataset["text"]),
+                padding=True,
+                truncation=True,
+                return_tensors="pt",
             )
             result = model.predict(
                 ClassificationDataset(texts_encoded, [None] * len(dataset))
@@ -73,7 +78,6 @@ def main():
             end_time = time.perf_counter()
             print(result)
             print("Computation time: ", end_time - start_time)
-
 
     # Load data
     if args.input:
@@ -87,7 +91,6 @@ def main():
     else:
         dataset = pd.DataFrame({"text": [args.text]})
 
-
     # Instantiate Model
     if args.model in ["NB", "SVC", "RF", "SGD", "SGD_GENSIM"]:
         model = Model(args.model, weights_path=WEIGHT_PATHS[args.model])
@@ -98,7 +101,11 @@ def main():
         vectors = vectorizer.transform(list(dataset["text"]))
         result = model.predict(vectors)
     elif args.model in ["Bert", "French_Bert"]:
-        tokenizer = AutoTokenizer.from_pretrained("albert-base-v2") if args.model == "Bert" else AutoTokenizer.from_pretrained("dbmdz/bert-base-french-europeana-cased")
+        tokenizer = (
+            AutoTokenizer.from_pretrained("albert-base-v2")
+            if args.model == "Bert"
+            else AutoTokenizer.from_pretrained("dbmdz/bert-base-french-europeana-cased")
+        )
         model = Model(args.model, weights_path=WEIGHT_PATHS[args.model])
 
         texts_encoded = tokenizer(
