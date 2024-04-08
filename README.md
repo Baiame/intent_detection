@@ -56,6 +56,26 @@ Available models are :
   - [Bert](https://huggingface.co/albert/albert-base-v2)
   - [French_Bert](https://huggingface.co/dbmdz/bert-base-french-europeana-cased)
 
+
+For the French_Bert models, weights are available [here](https://we.tl/t-FxKdwjOnw4).
+Just download the weights and place the folder in the models repository, following this architecture :
+
+```md
+intent_detection/
+├── models/
+│   ├── svd.joblib
+│   ├── ...
+│   ├── albert-base-v2/
+│   │   ├── config.json
+│   │   └── model.safetensor
+│   └── french-bert/
+│       ├── config.json
+│       └── model.safetensor
+├── src/
+...
+
+```
+
 ## Run
 ### Run interactive shell
 ```
