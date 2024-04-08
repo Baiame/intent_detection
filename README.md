@@ -46,15 +46,15 @@ make install
 Available models are :
 - Vectorizers :
   - [TFIDF](https://medium.com/@cmukesh8688/tf-idf-vectorizer-scikit-learn-dbc0244a911a)
-  - Gensim
+  - [Gensim](https://fauconnier.github.io/)
 - Classification Models :
-  - NB
-  - SVC
-  - SGD
-  - RF
+  - [NB](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html)
+  - [SVC](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html)
+  - [SGD](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html)
+  - [RF](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
 - DNN Models (no vectorizer needed) :
-  - Bert
-  - French_Bert
+  - [Bert](https://huggingface.co/albert/albert-base-v2)
+  - [French_Bert](https://huggingface.co/dbmdz/bert-base-french-europeana-cased)
 
 ## Run
 ### Run interactive shell
