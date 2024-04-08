@@ -56,8 +56,9 @@ Available models are :
   - [Bert](https://huggingface.co/albert/albert-base-v2)
   - [French_Bert](https://huggingface.co/dbmdz/bert-base-french-europeana-cased)
 
+All the models are available in the repository, except for 2 models :
 
-For the French_Bert models, fine-tuned weights are available [at his link](https://we.tl/t-FxKdwjOnw4).
+- For the French_Bert models, fine-tuned weights are available [at his link](https://we.tl/t-FxKdwjOnw4).
 Just download the weights and place the folder in the models repository, following this structure :
 
 ```md
@@ -75,7 +76,7 @@ intent_detection/
 ...
 ```
 
-To retrieve the Gensim vectorizer weights, run this command
+- For the Gensim vectorizer weights, run this command :
 ```
 wget https://embeddings.net/embeddings/frWiki_no_phrase_no_postag_700_cbow_cut100.bin
 ```
